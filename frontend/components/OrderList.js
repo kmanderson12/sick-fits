@@ -2,14 +2,14 @@ import React from "react";
 import { Query } from "react-apollo";
 import { formatDistance } from "date-fns";
 import Link from "next/link";
-import Error from "../components/ErrorMessage";
 import styled from "styled-components";
 import gql from "graphql-tag";
+import Error from "./ErrorMessage";
 import formatMoney from "../lib/formatMoney";
 import OrderItemStyles from "./styles/OrderItemStyles";
 
 const USER_ORDERS_QUERY = gql`
-  query USER_ORDER_QUERY {
+  query USER_ORDERS_QUERY {
     orders(orderBy: createdAt_DESC) {
       id
       total
@@ -37,13 +37,13 @@ class OrderList extends React.Component {
     return (
       <Query query={USER_ORDERS_QUERY}>
         {({ data: { orders }, loading, error }) => {
-          if (loading) return <p>Loading...</p>;
+          if (loading) return <p>loading...</p>;
           if (error) return <Error error={error} />;
           console.log(orders);
           return (
             <div>
               <h2>
-                You have {orders.length} order{(orders.length = 1 ? "" : "s")}!
+                You have {orders.length} order{orders.length === 1 ? "" : "s"}!
               </h2>
               <OrderUl>
                 {orders.map(order => (
@@ -51,9 +51,7 @@ class OrderList extends React.Component {
                     <Link
                       href={{
                         pathname: "/order",
-                        query: {
-                          id: order.id
-                        }
+                        query: { id: order.id }
                       }}
                     >
                       <a>

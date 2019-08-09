@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Form from "./styles/Form";
-import Router from "next/router";
-import formatMoney from "../lib/formatMoney";
-import Error from "./ErrorMessage";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import Form from './styles/Form';
+import Router from 'next/router';
+import formatMoney from '../lib/formatMoney';
+import Error from './ErrorMessage';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -28,31 +28,31 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component {
   state = {
-    title: "",
-    description: "",
-    image: "",
-    largeImage: "",
+    title: '',
+    description: '',
+    image: '',
+    largeImage: '',
     price: 0
   };
   handleChange = e => {
     const { name, type, value } = e.target;
-    const val = type === "number" ? parseFloat(value) : value;
+    const val = type === 'number' ? parseFloat(value) : value;
     this.setState({
       [name]: val
     });
   };
 
   uploadFile = async e => {
-    console.log("Upload file");
+    console.log('Upload file');
     const files = e.target.files;
     const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "sickfits");
+    data.append('file', files[0]);
+    data.append('upload_preset', 'sickfits');
 
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/kmanderson12/image/upload",
+      'https://api.cloudinary.com/v1_1/kmanderson12/image/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: data
       }
     );
@@ -68,6 +68,7 @@ class CreateItem extends Component {
       <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
         {(createItem, { loading, error, called, data }) => (
           <Form
+            data-test="form"
             onSubmit={async e => {
               // Stop from submitting
               e.preventDefault();
@@ -76,7 +77,7 @@ class CreateItem extends Component {
               // change to single item page
               console.log(res);
               Router.push({
-                pathname: "/item",
+                pathname: '/item',
                 query: { id: res.data.createItem.id }
               });
             }}
@@ -93,9 +94,13 @@ class CreateItem extends Component {
                   required
                   onChange={this.uploadFile}
                 />
-                { this.state.image &&
-                  <img width="200" src={this.state.image} alt="Upload Preview" />
-                }
+                {this.state.image && (
+                  <img
+                    width="200"
+                    src={this.state.image}
+                    alt="Upload Preview"
+                  />
+                )}
               </label>
 
               <label htmlFor="title">

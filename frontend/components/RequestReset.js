@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import Form from './styles/Form';
+import Error from './ErrorMessage';
 
 const REQUEST_RESET_MUTATION = gql`
   mutation REQUEST_RESET_MUTATION($email: String!) {
@@ -14,7 +14,7 @@ const REQUEST_RESET_MUTATION = gql`
 
 class Signin extends Component {
   state = {
-    email: ""
+    email: ''
   };
 
   saveToState = e => {
@@ -30,11 +30,12 @@ class Signin extends Component {
           return (
             <Form
               method="POST"
+              data-test="form"
               onSubmit={async e => {
                 e.preventDefault();
                 await reset();
                 this.setState({
-                  email: ""
+                  email: ''
                 });
               }}
             >
@@ -66,3 +67,4 @@ class Signin extends Component {
 }
 
 export default Signin;
+export { REQUEST_RESET_MUTATION };

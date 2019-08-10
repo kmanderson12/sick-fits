@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
-import { CURRENT_USER_QUERY } from "./User";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import Form from './styles/Form';
+import Error from './ErrorMessage';
+import { CURRENT_USER_QUERY } from './User';
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -21,9 +21,9 @@ const SIGNUP_MUTATION = gql`
 
 class Signup extends Component {
   state = {
-    name: "",
-    password: "",
-    email: ""
+    name: '',
+    password: '',
+    email: ''
   };
 
   saveToState = e => {
@@ -47,9 +47,9 @@ class Signup extends Component {
                 e.preventDefault();
                 await signup();
                 this.setState({
-                  name: "",
-                  email: "",
-                  password: ""
+                  email: '',
+                  name: '',
+                  password: ''
                 });
               }}
             >
@@ -98,3 +98,4 @@ class Signup extends Component {
 }
 
 export default Signup;
+export { SIGNUP_MUTATION };

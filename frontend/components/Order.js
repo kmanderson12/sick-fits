@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Query } from "react-apollo";
-import { format } from "date-fns";
-import Head from "next/head";
-import gql from "graphql-tag";
-import formatMoney from "../lib/formatMoney";
-import Error from "./ErrorMessage";
-import OrderStyles from "./styles/OrderStyles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Query, Mutation } from 'react-apollo';
+import { format } from 'date-fns';
+import Head from 'next/head';
+import gql from 'graphql-tag';
+import formatMoney from '../lib/formatMoney';
+import Error from './ErrorMessage';
+import OrderStyles from './styles/OrderStyles';
 
 const SINGLE_ORDER_QUERY = gql`
   query SINGLE_ORDER_QUERY($id: ID!) {
@@ -30,10 +30,21 @@ const SINGLE_ORDER_QUERY = gql`
   }
 `;
 
+const CLOSE_CART_MUTATION = gql`
+  mutation {
+    closeCart @client
+  }
+`;
+
 class Order extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired
   };
+  // componentDidMount() {
+  //   this.props.client.mutate({
+  //     mutation: CLOSE_CART_MUTATION
+  //   });
+  // }
   render() {
     return (
       <Query query={SINGLE_ORDER_QUERY} variables={{ id: this.props.id }}>
@@ -57,7 +68,7 @@ class Order extends React.Component {
               </p>
               <p>
                 <span>Date</span>
-                <span>{format(order.createdAt, "MMMM d, YYYY h:mm a")}</span>
+                <span>{format(order.createdAt, 'MMMM d, YYYY h:mm a')}</span>
               </p>
               <p>
                 <span>Order Total</span>

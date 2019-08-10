@@ -1,16 +1,17 @@
-import React from "react";
-import { Query, Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import { adopt } from "react-adopt";
-import CartStyles from "./styles/CartStyles";
-import Supreme from "./styles/Supreme";
-import CloseButton from "./styles/CloseButton";
-import SickButton from "./styles/SickButton";
-import User from "./User";
-import CartItem from "./CartItem";
-import calcTotalPrice from "../lib/calcTotalPrice";
-import formatMoney from "../lib/formatMoney";
-import TakeMyMoney from "./TakeMyMoney";
+import React from 'react';
+import { Query, Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import { adopt } from 'react-adopt';
+import { withRouter } from 'next/router';
+import CartStyles from './styles/CartStyles';
+import Supreme from './styles/Supreme';
+import CloseButton from './styles/CloseButton';
+import SickButton from './styles/SickButton';
+import User from './User';
+import CartItem from './CartItem';
+import calcTotalPrice from '../lib/calcTotalPrice';
+import formatMoney from '../lib/formatMoney';
+import TakeMyMoney from './TakeMyMoney';
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -32,43 +33,45 @@ const Composed = adopt({
   localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>
 });
 
-const Cart = () => {
-  return (
-    <Composed>
-      {({ user, toggleCart, localState }) => {
-        const me = user.data.me;
-        if (!me) return null;
-        return (
-          <CartStyles open={localState.data.cartOpen}>
-            <header>
-              <CloseButton title="close" onClick={toggleCart}>
-                &times;
-              </CloseButton>
-              <Supreme>{me.name}'s Cart</Supreme>
-              <p>
-                You Have {me.cart.length} Item
-                {me.cart.length === 1 ? "" : "s"} in your cart.
-              </p>
-            </header>
-            <ul>
-              {me.cart.map(cartItem => (
-                <CartItem key={cartItem.id} cartItem={cartItem} />
-              ))}
-            </ul>
-            <footer>
-              <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-              {me.cart.length && (
-                <TakeMyMoney>
-                  <SickButton>Checkout</SickButton>
-                </TakeMyMoney>
-              )}
-            </footer>
-          </CartStyles>
-        );
-      }}
-    </Composed>
-  );
-};
+class Cart extends React.Component {
+  render() {
+    return (
+      <Composed>
+        {({ user, toggleCart, localState }) => {
+          const me = user.data.me;
+          if (!me) return null;
+          return (
+            <CartStyles open={localState.data.cartOpen}>
+              <header>
+                <CloseButton title="close" onClick={toggleCart}>
+                  &times;
+                </CloseButton>
+                <Supreme>{me.name}'s Cart</Supreme>
+                <p>
+                  You Have {me.cart.length} Item
+                  {me.cart.length === 1 ? '' : 's'} in your cart.
+                </p>
+              </header>
+              <ul>
+                {me.cart.map(cartItem => (
+                  <CartItem key={cartItem.id} cartItem={cartItem} />
+                ))}
+              </ul>
+              <footer>
+                <p>{formatMoney(calcTotalPrice(me.cart))}</p>
+                {me.cart.length && (
+                  <TakeMyMoney>
+                    <SickButton>Checkout</SickButton>
+                  </TakeMyMoney>
+                )}
+              </footer>
+            </CartStyles>
+          );
+        }}
+      </Composed>
+    );
+  }
+}
 
-export default Cart;
+export default withRouter(Cart);
 export { LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION };

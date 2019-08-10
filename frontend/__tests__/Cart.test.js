@@ -3,7 +3,7 @@ import wait from 'waait';
 import toJSON from 'enzyme-to-json';
 import { MockedProvider } from 'react-apollo/test-utils';
 import Cart, { LOCAL_STATE_QUERY } from '../components/Cart';
-import { CURRENT_USER_QUERY } from '../components/Cart';
+import { CURRENT_USER_QUERY } from '../components/User';
 import { fakeUser, fakeCartItem } from '../lib/testUtils';
 
 const mocks = [
@@ -35,10 +35,9 @@ describe('<Cart/>', () => {
         <Cart />
       </MockedProvider>
     );
-    await wait(50);
+    await wait();
     wrapper.update();
-
-    console.log(wrapper.debug());
-    //expect(toJSON(wrapper.find('header'))).toMatchSnapshot();
+    expect(toJSON(wrapper.find('header'))).toMatchSnapshot();
+    expect(wrapper.find('CartItem')).toHaveLength(1);
   });
 });

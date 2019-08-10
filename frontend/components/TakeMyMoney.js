@@ -1,13 +1,13 @@
-import React from "react";
-import StripeCheckout from "react-stripe-checkout";
-import { Mutation } from "react-apollo";
-import Router from "next/router";
-import NProgress from "nprogress";
-import PropTypes from "prop-types";
-import gql from "graphql-tag";
-import calcTotalPrice from "../lib/calcTotalPrice";
-import Error from "./ErrorMessage";
-import User, { CURRENT_USER_QUERY } from "./User";
+import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
+import { Mutation } from 'react-apollo';
+import Router from 'next/router';
+import NProgress from 'nprogress';
+import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+import calcTotalPrice from '../lib/calcTotalPrice';
+import Error from './ErrorMessage';
+import User, { CURRENT_USER_QUERY } from './User';
 
 const CREATE_ORDER_MUTATION = gql`
   mutation createOrder($token: String!) {
@@ -30,7 +30,7 @@ function totalItems(cart) {
 class TakeMyMoney extends React.Component {
   onToken = async (res, createOrder) => {
     NProgress.start();
-    console.log("On Token Called!");
+    console.log('On Token Called!');
     console.log(res.id);
     // manually call the mutation once we have our stripe token
     const order = await createOrder({
@@ -42,7 +42,7 @@ class TakeMyMoney extends React.Component {
     });
 
     Router.push({
-      pathname: "/order",
+      pathname: '/order',
       query: { id: order.data.createOrder.id }
     });
   };

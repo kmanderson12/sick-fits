@@ -42,6 +42,9 @@ const CartStyles = styled.div`
     list-style: none;
     overflow: scroll;
   }
+  @media (max-width: 700px) {
+    min-width: 375px;
+  }
 `;
 
 export default CartStyles;

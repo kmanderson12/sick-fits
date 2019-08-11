@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Mutation, Query } from "react-apollo";
-import gql from "graphql-tag";
-import Form from "./styles/Form";
-import Router from "next/router";
-import formatMoney from "../lib/formatMoney";
-import Error from "./ErrorMessage";
+import React, { Component } from 'react';
+import { Mutation, Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import Form from './styles/Form';
+import Router from 'next/router';
+import formatMoney from '../lib/formatMoney';
+import Error from './ErrorMessage';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
@@ -48,11 +48,11 @@ const UPDATE_ITEM_MUTATION = gql`
 
 class UpdateItem extends Component {
   state = {
-    isFetching: false,
+    isFetching: false
   };
   handleChange = e => {
     const { name, type, value } = e.target;
-    const val = type === "number" ? parseFloat(value) : value;
+    const val = type === 'number' ? parseFloat(value) : value;
     this.setState({
       [name]: val
     });
@@ -60,7 +60,7 @@ class UpdateItem extends Component {
 
   updateItem = async (e, updateItemMutation) => {
     e.preventDefault();
-    console.log("Updating Item!!");
+    console.log('Updating Item!!');
     console.log(this.state);
     const res = await updateItemMutation({
       variables: {
@@ -68,24 +68,24 @@ class UpdateItem extends Component {
         ...this.state
       }
     });
-    console.log("updated!");
+    console.log('updated!');
   };
 
   uploadFile = async e => {
-    console.log("Upload file");
+    console.log('Upload file');
     const files = e.target.files;
     const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "sickfits");
+    data.append('file', files[0]);
+    data.append('upload_preset', 'sickfits');
 
     this.setState({
       isFetching: true
     });
 
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/kmanderson12/image/upload",
+      'https://api.cloudinary.com/v1_1/kmanderson12/image/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: data
       }
     );
@@ -94,7 +94,7 @@ class UpdateItem extends Component {
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
-      isFetching: false,
+      isFetching: false
     });
   };
 
@@ -122,10 +122,9 @@ class UpdateItem extends Component {
                         id="file"
                         name="file"
                         placeholder="File"
-                        required
                         onChange={this.uploadFile}
                       />
-                      { this.state.isFetching ? (
+                      {this.state.isFetching ? (
                         <p>Loading image...</p>
                       ) : !this.state.image ? (
                         <img
@@ -154,7 +153,7 @@ class UpdateItem extends Component {
                         onChange={this.handleChange}
                       />
                     </label>
-              
+
                     <label htmlFor="price">
                       Price
                       <input
@@ -181,7 +180,7 @@ class UpdateItem extends Component {
                     </label>
 
                     <button type="submit">
-                      Sav{loading ? "ing" : "e"} Changes
+                      Sav{loading ? 'ing' : 'e'} Changes
                     </button>
                   </fieldset>
                 </Form>

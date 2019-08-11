@@ -14,6 +14,7 @@ const OrderStyles = styled.div`
     border-bottom: 1px solid ${props => props.theme.offWhite};
     span {
       padding: 1rem;
+      font-size: 12px;
       &:first-child {
         font-weight: 900;
         text-align: right;
@@ -32,6 +33,12 @@ const OrderStyles = styled.div`
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    @media (max-width: 700px) {
+      grid-template-columns: 100px 1fr;
+      img {
+        object-fit: contain;
+      }
     }
   }
 `;

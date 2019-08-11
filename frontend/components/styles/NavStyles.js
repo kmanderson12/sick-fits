@@ -23,6 +23,10 @@ const NavStyles = styled.ul`
       font-size: 10px;
       padding: 0 10px;
     }
+    @media (max-width: 500px) {
+      font-size: 8px;
+      padding: 0 10px;
+    }
     &:before {
       content: '';
       width: 2px;
@@ -52,9 +56,9 @@ const NavStyles = styled.ul`
       &:after {
         width: calc(100% - 60px);
       }
-    @media (max-width: 700px) {
+      @media (max-width: 700px) {
         width: calc(100% - 10px);
-    }
+      }
     }
   }
   @media (max-width: 1300px) {

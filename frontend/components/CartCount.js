@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const AnimationStyles = styled.span`
   position: relative;
@@ -37,8 +37,11 @@ const Dot = styled.div`
   min-width: 3rem;
   margin-left: 1rem;
   font-weight: 100;
-  font-feature-settings: "tnum";
+  font-feature-settings: 'tnum';
   font-variant-numeric: tabular-nums;
+  @media (max-width: 700px) {
+    margin: 0.5rem;
+  }
 `;
 
 const CartCount = ({ count }) => (

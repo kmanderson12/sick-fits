@@ -11,6 +11,9 @@ const Item = styled.div`
     width: 100%;
     height: 400px;
     object-fit: cover;
+    @media (max-width: 700px) {
+      object-fit: contain;
+    }
   }
   p {
     font-size: 12px;
@@ -32,6 +35,9 @@ const Item = styled.div`
       border: 0;
       font-size: 1rem;
       padding: 1rem;
+    }
+    @media (max-width: 700px) {
+      grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     }
   }
 `;

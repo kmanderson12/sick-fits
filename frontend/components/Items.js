@@ -26,6 +26,9 @@ const Center = styled.div`
 const ItemsList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
   grid-gap: 60px;
   max-width: ${props => props.theme.maxWidth};
   margin: 0 auto;
@@ -35,21 +38,26 @@ class Items extends Component {
   render() {
     return (
       <Center>
-        <Pagination page={parseFloat(this.props.page)} ></Pagination>
-        <Query query={ALL_ITEMS_QUERY}
-        variables={{
-          skip: this.props.page * perPage - perPage,
-        }}
+        <Pagination page={parseFloat(this.props.page)} />
+        <Query
+          query={ALL_ITEMS_QUERY}
+          variables={{
+            skip: this.props.page * perPage - perPage
+          }}
         >
           {({ data, error, loading }) => {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error: {error.message}</p>;
             return (
-              <ItemsList>{data.items.map(item => <Item item={item} key={item.id} />)}</ItemsList>
+              <ItemsList>
+                {data.items.map(item => (
+                  <Item item={item} key={item.id} />
+                ))}
+              </ItemsList>
             );
           }}
         </Query>
-        <Pagination page={parseFloat(this.props.page)} ></Pagination>
+        <Pagination page={parseFloat(this.props.page)} />
       </Center>
     );
   }
